@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Employee_managerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Employee_manager.dbo.employee' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="employee">
+          <Property Name="Employee_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Employee_Number" Type="varchar" MaxLength="30" />
+          <Property Name="Contact" Type="varchar" MaxLength="30" />
+          <Property Name="Salary" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="Addresss" Type="varchar" MaxLength="20" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Employee_manager.dbo.Logins' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Logins">
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="passwords" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <Function Name="sp_addEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_Name" Type="varchar" Mode="In" />
+          <Parameter Name="Employee_Number" Type="varchar" Mode="In" />
+          <Parameter Name="Contact" Type="varchar" Mode="In" />
+          <Parameter Name="Salary" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Addresss" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_logins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="passwords" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ViewEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeNO" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Employee_managerModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Employee_managerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Employee_managerEntities3" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="sp_addEmployees">
+            <Parameter Name="Employee_Name" Mode="In" Type="String" />
+            <Parameter Name="Employee_Number" Mode="In" Type="String" />
+            <Parameter Name="Contact" Mode="In" Type="String" />
+            <Parameter Name="Salary" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Addresss" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_logins" ReturnType="Collection(Employee_managerModel.sp_logins_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="passwords" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ViewEmployees" ReturnType="Collection(Employee_managerModel.ViewEmployees_Result)">
+            <Parameter Name="EmployeeNO" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_logins_Result">
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="passwords" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ViewEmployees_Result">
+          <Property Type="String" Name="Employee_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Employee_Number" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Contact" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Salary" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Addresss" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Employee_managerModelStoreContainer" CdmEntityContainer="Employee_managerEntities3" >
+          <FunctionImportMapping FunctionImportName="sp_addEmployees" FunctionName="Employee_managerModel.Store.sp_addEmployees" />
+          <FunctionImportMapping FunctionImportName="sp_logins" FunctionName="Employee_managerModel.Store.sp_logins">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Employee_managerModel.sp_logins_Result">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="passwords" ColumnName="passwords" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ViewEmployees" FunctionName="Employee_managerModel.Store.ViewEmployees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Employee_managerModel.ViewEmployees_Result">
+                <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+                <ScalarProperty Name="Employee_Number" ColumnName="Employee_Number" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Addresss" ColumnName="Addresss" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
